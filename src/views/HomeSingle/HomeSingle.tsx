@@ -68,10 +68,16 @@ const HomeSingle: React.FC = () => {
     }
   }, [onApprove])
   return ( 
+    <header>
+
+    <img className="logo-header" src="/images/PEN_383.png" alt="" />
+    <div className="title-logo"><h1>PolyEarn</h1></div>
+
+    
     <section id="principal">
         <div className="row m-5 justify-content-md-center">
           <div className="col col-md-9">
-           <div className="text-center"><img className="logo" src="/images/PEN_383.png" alt="" /><a className="titulo" href="/">  PolyEarn</a></div>
+           <div className="header-logo"><h1 className="titulo">  PolyEarn</h1></div>
             <h1 className="text-center">PEN Token Sale</h1>
             <div className="subtitle">PolyEarn Finance is a DeFi portal on the Polygon network that will allow you to earn tokens and save yourself from market crashes</div>
             <div className="ml-7 clock" />
@@ -110,7 +116,7 @@ const HomeSingle: React.FC = () => {
                 <h3 id="txtPoolSupply" className="display-5 mb-5">1</h3>
               </div>
             </div>
-            <div className="row m-5 justify-content-md-center youhave">
+            <div className="row m-5 justify-content-md-center youhave backgrund">
               You have {allowance} PENs bought
             </div>
             <div className="row m-5 justify-content-md-center">
@@ -134,8 +140,7 @@ const HomeSingle: React.FC = () => {
           </div>
         </div>
       </section>
-
-    
+     </header>  
   )
 }
 
