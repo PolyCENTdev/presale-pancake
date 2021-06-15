@@ -58,7 +58,7 @@ export const usePresaleAllowance = (tokenContract: Contract) => {
         const res = await tokenContract.methods.balances(account).call()
         setAllowance(res / 1000000000000000000)
       } catch (e) {
-        setAllowance(null)
+        setAllowance(0)
       }
     }
     fetch()
