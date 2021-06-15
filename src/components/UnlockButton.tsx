@@ -5,12 +5,16 @@ import useI18n from 'hooks/useI18n'
 
 const UnlockButton = (props) => {
   const TranslateString = useI18n()
-  const { connect, reset } = useWallet()
+  const { account, connect, reset } = useWallet()
   const { onPresentConnectModal } = useWalletModal(connect, reset)
-
+  let accountNumber="";
+  if(account)
+  {
+    accountNumber = `${account.substring(0, 4)} ... ${account.substring(account.length - 4)}`;
+  }
   return (
-    <Button onClick={onPresentConnectModal} {...props}>
-      {TranslateString(292, 'Unlock Wallet')}
+    <Button className="btn btnConnect" disabled={account} onClick={onPresentConnectModal} {...props}>
+      {!account ? "Connect" : accountNumber}
     </Button>
   )
 }

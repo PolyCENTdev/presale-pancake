@@ -2,6 +2,10 @@ import { useCallback } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Contract } from 'web3-eth-contract'
 import { ethers } from 'ethers'
+import addresses from 'config/constants/contracts'
+import { getWeb3, getContract } from 'utils/web3'
+import useWeb3 from 'hooks/useWeb3'
+import BigNumber from 'bignumber.js'
 import { useDispatch } from 'react-redux'
 import { updateUserAllowance, fetchFarmUserDataAsync } from 'state/actions'
 import { approve, receive } from 'utils/callHelpers'
@@ -12,16 +16,30 @@ export const usePayPresale = (amount: string) => {
   const dispatch = useDispatch()
   const { account }: { account: string } = useWallet()
   const masterChefContract = useMasterchef()
-
+  const w3 = useWeb3();
   const handlePayPresale = useCallback(async () => {
-    try {
-      const tx = await receive(masterChefContract, amount, account)
+    try {   
+      let ret = false;   
+      const txx = {
+        from: account,
+        to: addresses.masterChef["137"],
+        value:  w3.utils.toWei(amount, 'ether'),
+        chain: "137"
+      };
+      w3.eth.sendTransaction(txx, function(err, transactionHash){
+        if (err) { 
+          console.log(err); 
+          ret = false;
+        } else {
+            ret = true;
+        }
+      });
       dispatch(fetchFarmUserDataAsync(account))
-      return tx
+      return ret;
     } catch (e) {
       return false
     }
-  }, [account, dispatch, amount, masterChefContract])
+  }, [account, dispatch, w3, amount])
 
   return { onApprove: handlePayPresale }
 }

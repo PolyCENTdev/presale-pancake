@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useCallback, useEffect } from 'react'
+import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
+import UnlockButton from 'components/UnlockButton'
 import { Heading, Text, BaseLayout, Button } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import { provider } from 'web3-core'
@@ -7,7 +9,9 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 
 import { usePayPresale } from 'hooks/useApprove'
 import { getContract } from 'utils/erc20'
+import { Contract } from 'web3-eth-contract'
 import { useMasterchef } from '../../hooks/useContract'
+import { usePresaleAllowance } from '../../hooks/useAllowance'
 
 
 
@@ -16,17 +20,18 @@ const HomeSingle: React.FC = () => {
   const TranslateString = useI18n()
   const { account, connect } = useWallet()
   const [amountSend, setAmountSend] = useState('')
+  const masterChefContract = useMasterchef()
+  const allowance = usePresaleAllowance(masterChefContract);
   useEffect(() => {
     if (!account && !window.localStorage.getItem('accountStatus')) {
       connect('injected')
       window.localStorage.setItem('accountStatus', "1");
     }
-  }, [account, connect])
+  }, [account, connect, masterChefContract])
   const [requestedApproval, setRequestedApproval] = useState(false)
-  const masterChefContract = useMasterchef()
-  const contract = masterChefContract;
   
   const { onApprove } = usePayPresale(amountSend)
+
 
   const handleAmount = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -48,7 +53,6 @@ const HomeSingle: React.FC = () => {
 
   const handleApprove = useCallback(async (ammount) => {
     try {
-      
         if (window.localStorage.getItem('accountStatus')) {
           setRequestedApproval(true)
           await onApprove()
@@ -105,6 +109,9 @@ const HomeSingle: React.FC = () => {
 </h6>
                 <h3 id="txtPoolSupply" className="display-5 mb-5">1</h3>
               </div>
+            </div>
+            <div className="row m-5 justify-content-md-center youhave">
+              You have {allowance} PENs bought
             </div>
             <div className="row m-5 justify-content-md-center">
               <div className="divparentcoin">

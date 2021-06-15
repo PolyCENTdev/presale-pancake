@@ -573,6 +573,16 @@ ul#nav li.current a { color: #d4aa2a; }
     width: 200px;
     font-size: 1.5em !important;
 }
+.youhave{
+   color: #fff;
+    background-color: #d4aa2a !important;
+    padding: 10px;
+}
+.btnConnect{
+   position: absolute;
+   top:30px;
+   right: 15px;
+}
 .bd-footer li{
    font-size: 0.8em;
 }

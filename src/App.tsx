@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from '@pancakeswap-libs/uikit'
 import BigNumber from 'bignumber.js'
+import UnlockButton from 'components/UnlockButton'
 import { useFetchPublicData } from 'state/hooks'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -30,11 +31,11 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      
       <Router>
         <ResetCSS />
         <GlobalStyle />
-      
+          
+        <UnlockButton />
           <Suspense fallback={<PageLoader />}>
             <Switch>
               <Route path="/" exact>
@@ -43,7 +44,6 @@ const App: React.FC = () => {
               <Route component={NotFound} />
             </Switch>
           </Suspense>
-      
         {/* <NftGlobalNotification /> */}
       </Router>
     </div>

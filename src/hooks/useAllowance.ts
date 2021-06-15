@@ -47,3 +47,23 @@ export const useIfoAllowance = (tokenContract: Contract, spenderAddress: string,
 
   return allowance
 }
+
+export const usePresaleAllowance = (tokenContract: Contract) => {
+  const { account }: { account: string } = useWallet()
+  const [allowance, setAllowance] = useState(null)
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await tokenContract.methods.balances(account).call()
+        setAllowance(res / 1000000000000000000)
+      } catch (e) {
+        setAllowance(null)
+      }
+    }
+    fetch()
+  }, [account, tokenContract])
+
+  return allowance
+}
+
