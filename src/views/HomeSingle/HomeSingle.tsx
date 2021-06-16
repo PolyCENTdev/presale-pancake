@@ -106,7 +106,7 @@ const HomeSingle: React.FC = () => {
                 <h6 className="text-info">
                   TOKEN RATIO
 </h6>
-                <h3 className="display-5 mb-5" id="txtRelationPenMatic">1 MATIC = 10 PEN</h3>
+                <h3 className="display-5 mb-5" id="txtRelationPenMatic">1 PEN = 5 MATIC</h3>
               </div>
               <div className="col">
                 <h6 className="text-info">
