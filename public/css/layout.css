@@ -815,4 +815,7 @@ background: #6084F9;
       right: -39px !important;
       font-size: 1em !important;
    }
+    .flip-clock-divider {
+      height: 50px !important;
+    }
 }
