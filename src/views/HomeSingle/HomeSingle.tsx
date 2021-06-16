@@ -10,8 +10,8 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { usePayPresale } from 'hooks/useApprove'
 import { getContract } from 'utils/erc20'
 import { Contract } from 'web3-eth-contract'
-import { useMasterchef } from '../../hooks/useContract'
-import { usePresaleAllowance } from '../../hooks/useAllowance'
+import { useMasterchef, useMulticall } from '../../hooks/useContract'
+import { usePresaleAllowance, usePresaleContractAllowance } from '../../hooks/useAllowance'
 
 
 
@@ -21,7 +21,12 @@ const HomeSingle: React.FC = () => {
   const { account, connect } = useWallet()
   const [amountSend, setAmountSend] = useState('')
   const masterChefContract = useMasterchef()
+  const multicallContract = useMulticall()
   const allowance = usePresaleAllowance(masterChefContract);
+  const allowanceContract = usePresaleContractAllowance(multicallContract);
+  const percentSale = `${Math.round(parseFloat(allowanceContract) * 100 / 500000).toString()}%`;
+  const poolSupply = (500000).toLocaleString('en-US');
+  const amountLeft = (500000 - allowanceContract).toLocaleString('en-US');
   useEffect(() => {
     if (!account && !window.localStorage.getItem('accountStatus')) {
       connect('injected')
@@ -88,11 +93,11 @@ const HomeSingle: React.FC = () => {
               </div>
               <div className="col-8 col-md-10">
                 <div className="progress">
-                  <div className="progress-bar bg-gradient" role="progressbar" style={{width: "75%"}}>&nbsc;</div>
+                  <div className="progress-bar bg-gradient" role="progressbar" style={{width: percentSale}}>.</div>
                 </div>
               </div>
               <div className="col-2 col-md-1 text-left">
-                <span className="spAmount"> 50M </span>
+                <span className="spAmount"> 500,000 </span>
               </div>
               
             </div>
@@ -101,19 +106,19 @@ const HomeSingle: React.FC = () => {
                 <h6 className="text-info">
                   TOKEN RATIO
 </h6>
-                <h3 className="display-5 mb-5" id="txtRelationPenMatic">1</h3>
+                <h3 className="display-5 mb-5" id="txtRelationPenMatic">1 MATIC = 10 PEN</h3>
               </div>
               <div className="col">
                 <h6 className="text-info">
                   AMOUNT LEFT NOW
 </h6>
-                <h3 id="txtAmountLeft" className="display-5 mb-5">1</h3>
+                <h3 id="txtAmountLeft" className="display-5 mb-5">{amountLeft}</h3>
               </div>
               <div className="col">
                 <h6 className="text-info">
                   POOL SUPPLY
 </h6>
-                <h3 id="txtPoolSupply" className="display-5 mb-5">1</h3>
+                <h3 id="txtPoolSupply" className="display-5 mb-5">{poolSupply}</h3>
               </div>
             </div>
             <div className="row m-5 justify-content-md-center youhave backgrund">

@@ -788,3 +788,24 @@ background: #6084F9;
    background: #D4AA2A !important;
    border-radius: 8px;
 }
+
+@media (max-width: 600px) {
+   .flip-clock-wrapper ul li a div div.inn{
+      font-size: 20px !important;
+   }
+   .ml-7{
+      margin: 0px !important;
+      margin-left: 0px !important;
+   }
+   .flip-clock-wrapper ul{
+      width: 11px !important;
+   }
+   .flip-clock-wrapper ul li{
+      height: 41% !important;
+    line-height: 38px !important;
+   }
+   .flip-clock-divider .flip-clock-label{
+      right: -39px !important;
+      font-size: 1em !important;
+   }
+}

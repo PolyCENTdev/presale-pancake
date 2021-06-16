@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Contract } from 'web3-eth-contract'
-import { usePen, useLottery } from './useContract'
+import { usePen, useLottery, useMasterchef } from './useContract'
 import { getAllowance } from '../utils/erc20'
 
 // Retrieve lottery allowance
@@ -56,6 +56,25 @@ export const usePresaleAllowance = (tokenContract: Contract) => {
     const fetch = async () => {
       try {
         const res = await tokenContract.methods.balances(account).call()
+        setAllowance(res / 1000000000000000000)
+      } catch (e) {
+        setAllowance(0)
+      }
+    }
+    fetch()
+  }, [account, tokenContract])
+
+  return allowance
+}
+export const usePresaleContractAllowance = (tokenContract: Contract) => {
+  const { account }: { account: string } = useWallet()
+  const [allowance, setAllowance] = useState(null)
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await tokenContract.methods.getEthBalance("0x25091B015859706c83811d854A25b04eE2058688").call()
+        
         setAllowance(res / 1000000000000000000)
       } catch (e) {
         setAllowance(0)

@@ -1,8 +1,5 @@
 jQuery(document).ready(function($) {
   var time = 380;
-  var relationPenMatic = 10;
-  var poolSupply = (50000000000).toLocaleString('en-US');
-  var amountLeft = (38525215700).toLocaleString('en-US');
   setTimeout(function() {
     // $("h1.responsive-headline").fitText(1, { minFontSize: "40px", maxFontSize: "90px" });
 
@@ -123,9 +120,7 @@ jQuery(document).ready(function($) {
 
     // start the clock
     clock.start();
-    $('#txtRelationPenMatic').html('1 MATIC = ' + relationPenMatic + ' PEN')
-    $('#txtPoolSupply').html(poolSupply)
-    $('#txtAmountLeft').html(amountLeft)
+    
     $(document).on('keyup', '#matictxt', function(){
       var result = parseFloat($(this).val()) * relationPenMatic;
       $('#pentxt').val(result);
